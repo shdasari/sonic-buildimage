@@ -2561,12 +2561,14 @@ The PAC and HOSTAPD tables define the PAC configuration parameters.
   }
 }
 
-"HOSTAPD_USER_CONFIG": {
-  "username1": {
-    "password": "password1",
-    "auth_type": "eap-md5",
-    "sessn_timeout": "60",
-    "vlan_id": "20"
+"HOSTAPD_GLOBAL_CONFIG": {
+    "USER_CONFIG": {
+        "username1": {
+            "password": "password1",
+	    "auth_type": "eap-md5",
+	    "session_timeout": "60",
+            "vlan_id": "20"
+        }
     }
 }
 
