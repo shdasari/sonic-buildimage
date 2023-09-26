@@ -2560,6 +2560,29 @@ The PAC and HOSTAPD tables define the PAC configuration parameters.
     "mab_auth_type": "eap-md5",
   }
 }
+
+"HOSTAPD_USER_CONFIG": {
+  "username1": {
+    "password": "password1",
+    "auth_type": "eap-md5",
+    "sessn_timeout": "60",
+    "vlan_id": "20"
+    }
+}
+
+"MAB_USER_CONFIG": {
+  "a1:b1:c2:d3:e3:f4": {
+    "access_type": "allow",
+    "vlan_id": "20",
+    "session_timeout": "60"
+  }
+}
+
+"PAC_GLOBAL_CONFIG": {
+  "global": {
+    "auth_order_list": "remote"
+  }
+}
 ```
 
 #### 5.2.3 Update value directly in db memory

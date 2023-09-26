@@ -123,5 +123,24 @@
                 ]
             }
         }
+    },
+    "PAC_WITH_VALID_VALUES": {
+        "sonic-pac:sonic-pac": {
+            "sonic-pac:MAB_USER_CONFIG": {
+                "MAB_USER_CONFIG_LIST": [{
+                        "mac": "00:02:02:03:04:05",
+                        "access-type": "allow",
+                        "vlan-id": "20",
+                        "session-timeout": "60"
+                    }]
+            }
+        },
+        "sonic-pac:sonic-pac": {
+            "sonic-pac:PAC_GLOBAL_CONFIG": {
+                "sonic-pac:global": {
+                    "sonic-pac:auth_order_list": "remote"
+                }
+            }
+        }
     }
 }
