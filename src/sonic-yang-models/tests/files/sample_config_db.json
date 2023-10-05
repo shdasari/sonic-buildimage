@@ -1573,15 +1573,13 @@
                 "local_ip": "12.12.0.2"
             }
         },
-	"HOSTAPD_GLOBAL_CONFIG": {
-	    "USER_CONFIG": {
-                "username1": {
-                    "password": "password1",
-	            "auth_type": "eap-md5",
-	            "session_timeout": "60",
-                    "vlan_id": "20"
-	        }
-            }
+	"HOSTAPD_USER_CONFIG": {
+            "username1": {
+                "password": "password1",
+	        "auth_type": "eap-md5",
+	        "session_timeout": "60",
+                "vlan_id": "20"
+	    }
         },
 	"MAB_USER_CONFIG": {
             "a1:b1:c2:d3:e3:f4": {

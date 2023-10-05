@@ -13,18 +13,16 @@
     },
     "HOSTAPD_UC_WITH_VALID_VALUES": {
         "sonic-hostapd:sonic-hostapd": {
-            "sonic-hostapd:HOSTAPD_GLOBAL_CONFIG": {
-                "sonic-hostapd:USER_CONFIG": {
-                    "USER_CONFIG_LIST": [
-                        {
-                            "username": "username1",
-                            "password": "password1",
-                            "auth_type": "eap-md5",
-                            "session_timeout": "60",
-                            "vlan_id": "20"
-                        }
-                    ]
-                }
+            "sonic-hostapd:HOSTAPD_USER_CONFIG": {
+                "HOSTAPD_USER_CONFIG_LIST": [
+                    {
+                        "username": "username1",
+                        "password": "password1",
+                        "auth_type": "eap-md5",
+                        "session_timeout": "60",
+                        "vlan_id": "20"
+                    }
+                ]
             }
         }
     }
