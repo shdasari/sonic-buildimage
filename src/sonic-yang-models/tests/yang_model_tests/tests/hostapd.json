@@ -1,5 +1,8 @@
 {
     "HOSTAPD_TEST": {
         "desc": "HOSTAPD configuration in global configuration table."
+    },
+    "HOSTAPD_UC_WITH_VALID_VALUES": {
+        "desc": "HOSTAPD configuration in user configuration table"
     }
 }

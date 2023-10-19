@@ -3,12 +3,20 @@ module sonic-pac {
     prefix spac;
     yang-version 1.1;
 
+    import ietf-yang-types {
+        prefix yang;
+    }
+
     import sonic-port {
         prefix prt;
     }
 
     description
         "SONiC PAC";
+
+    revision "2023-09-15" {
+        description "Enhancement: Added MAB UserConfig and PAC Config Functionality, Contributed by CG.";
+    }
 
     revision 2023-03-28 {
         description "Initial revision.";
@@ -110,6 +118,25 @@ module sonic-pac {
             enum chap {
                 description
                     "Configure CHAP auth type for MAB.";
+            }
+        }
+    }
+
+    typedef access_type_enumeration {
+        type enumeration {
+            enum allow;
+         /* enum deny; */
+        }
+    }
+
+    typedef pac_auth_enumeration {
+        type enumeration {
+            enum remote {
+                description "Configure authmgr authentication type as remote";
+            }
+
+            enum local {
+                description "Configure authmgr authentication type as local";
             }
         }
     }
@@ -227,6 +254,62 @@ module sonic-pac {
                     type auth_type_enumeration;
                     description
                         "MAB authentication type.";
+                }
+            }
+        }
+
+        list restricted-mac-addresses {
+            key "mac";
+            ordered-by user;
+            description "Restricted MAC addresses";
+            leaf mac {
+                type yang:mac-address;
+                description "The restricted MAC addresses: 00:00:00:00:00:00 - special use, FF:FF:FF:FF:FF:FF - Broadcast MAC address, 01:00:00:00:00:00 - IEEE 802.1D Ethernet Bridge Group Address, 33:33:00:00:00:00 - IPv6 Neighbor Discovery (ND) Multicast Address, 01:80:C2:00:00:00 - IEEE 802.1X PAE Multicast Address, 00:02:3F:00:00:00 - IETF PIM-SM Multicast Address, 00:02:B3:00:00:00 - Reserved for MPLS Multicast Label, 00:15:5D:00:00:00 - Cisco Systems, Inc. Virtual Router Redundancy Protocol (VRRP)";
+            }
+        }
+
+        container MAB_USER_CONFIG {
+            list MAB_USER_CONFIG_LIST {
+                key "mac";
+                description "MAB client configuration";
+                
+                leaf mac {
+                    type yang:mac-address;
+                    description "MAC address of the MAB client";
+                }
+
+                leaf access_type {
+                    type access_type_enumeration;
+                    default "allow";
+                    description "Access type for the MAB client (allow or deny)";
+                }
+
+                leaf vlan_id {
+                    type uint16 {
+                        range 1..4094;
+                    }
+                    description "VLAN ID associated with the authorized client";
+                }
+
+                leaf session_timeout {
+                    type uint32;
+                    description "Client session timeout in seconds";
+                }
+                must "not(../restricted-mac-addresses/mac = '00:00:00:00:00:00' or ../restricted-mac-addresses/mac = 'FF:FF:FF:FF:FF:FF' or ../restricted-mac-addresses/mac = '01:00:00:00:00:00' or ../restricted-mac-addresses/mac = '33:33:00:00:00:00' or ../restricted-mac-addresses/mac = '01:80:C2:00:00:00' or ../restricted-mac-addresses/mac = '00:02:3F:00:00:00' or ../restricted-mac-addresses/mac = '00:02:B3:00:00:00' or ../restricted-mac-addresses/mac = '00:15:5D:00:00:00')" {
+    error-message "MAC address is restricted.";
+                }
+            }
+        }
+
+        container PAC_CONFIG {
+            description "PAC global configuration.";
+
+            container global {
+                description "Global PAC configuration.";
+
+                leaf auth_order_list {
+                    type pac_auth_enumeration;
+                    description "Order list of authentication mechanisms used by PAC. Must be 'remote' or 'local'.";
                 }
             }
         }

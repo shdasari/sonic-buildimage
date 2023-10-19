@@ -12,5 +12,8 @@
     },
     "MAB_PORT_CONFIG_TEST" : {
         "desc": "MAB configuration for port."
+    },
+    "PAC_WITH_VALID_VALUES" : {
+        "desc": "PAC configuration for MAB user and authentication mechanism."
     }
 }
