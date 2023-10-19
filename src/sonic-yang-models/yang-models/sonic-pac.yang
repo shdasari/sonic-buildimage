@@ -258,6 +258,16 @@ module sonic-pac {
             }
         }
 
+        list restricted-mac-addresses {
+            key "mac";
+            ordered-by user;
+            description "Restricted MAC addresses";
+            leaf mac {
+                type yang:mac-address;
+                description "The restricted MAC addresses: 00:00:00:00:00:00 - special use, FF:FF:FF:FF:FF:FF - Broadcast MAC address, 01:00:00:00:00:00 - IEEE 802.1D Ethernet Bridge Group Address, 33:33:00:00:00:00 - IPv6 Neighbor Discovery (ND) Multicast Address, 01:80:C2:00:00:00 - IEEE 802.1X PAE Multicast Address, 00:02:3F:00:00:00 - IETF PIM-SM Multicast Address, 00:02:B3:00:00:00 - Reserved for MPLS Multicast Label, 00:15:5D:00:00:00 - Cisco Systems, Inc. Virtual Router Redundancy Protocol (VRRP)";
+            }
+        }
+
         container MAB_USER_CONFIG {
             list MAB_USER_CONFIG_LIST {
                 key "mac";
@@ -284,6 +294,9 @@ module sonic-pac {
                 leaf session_timeout {
                     type uint32;
                     description "Client session timeout in seconds";
+                }
+                must "not(../restricted-mac-addresses/mac = '00:00:00:00:00:00' or ../restricted-mac-addresses/mac = 'FF:FF:FF:FF:FF:FF' or ../restricted-mac-addresses/mac = '01:00:00:00:00:00' or ../restricted-mac-addresses/mac = '33:33:00:00:00:00' or ../restricted-mac-addresses/mac = '01:80:C2:00:00:00' or ../restricted-mac-addresses/mac = '00:02:3F:00:00:00' or ../restricted-mac-addresses/mac = '00:02:B3:00:00:00' or ../restricted-mac-addresses/mac = '00:15:5D:00:00:00')" {
+    error-message "MAC address is restricted.";
                 }
             }
         }
